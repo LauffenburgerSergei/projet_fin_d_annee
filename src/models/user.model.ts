@@ -35,4 +35,9 @@ userSchema.pre("save", async function (next: any) {
   }
 })
 
+userSchema.methods.comparePassword = async function (passwordAttemp: string): Promise<Boolean>{
+    const self = this as UserDocument
+    return await bcrypt.compare(passwordAttemp, self.password)
+}
+
 export default UserModel

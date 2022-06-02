@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 export interface UserDocument extends mongoose.Document {
     name: string;
     surname: string;
@@ -9,4 +10,5 @@ export interface UserDocument extends mongoose.Document {
     data: object;
     createdat: Date;
     updatedat: Date;
+    comparePassword (passwordAttemp:string) : Promise<Boolean>
 }
