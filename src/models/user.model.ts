@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const UserModel = mongoose.model("User", userSchema);
+
 
 userSchema.pre("save", async function (next: any) {
   let self = this as UserDocument;
@@ -40,5 +40,5 @@ userSchema.methods.comparePassword = async function (
 
   return await bcrypt.compare(passwordAttempt, self.password);
 };
-
+const UserModel = mongoose.model<UserDocument>('User', userSchema);
 export default UserModel;
