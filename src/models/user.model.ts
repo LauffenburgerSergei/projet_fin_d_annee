@@ -1,22 +1,20 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
-import config from 'config'
-import {UserDocument} from '../interfaces/interface.user'
-
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import config from "config";
+import { UserDocument } from "../../src/interfaces/interface.user";
 
 const userSchema = new mongoose.Schema(
-    {
-        name: {type: 'string', required: true},
-        surname: {type: 'string', required: true},
-        password: {type: 'string', required: true},
-        email: {type: 'string', required: true, unique: true},
-        role: {type: 'string', required: true},
-        data: {type: 'object', required: true},
-    },
-    {
-        timestamps: true
-    }
-)
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    surname: { type: String, required: true },
+    password: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const UserModel = mongoose.model("User", userSchema);
 
 userSchema.pre("save", async function (next: any) {
@@ -33,11 +31,14 @@ userSchema.pre("save", async function (next: any) {
   } else {
     return next();
   }
-})
+});
 
-userSchema.methods.comparePassword = async function (passwordAttemp: string): Promise<Boolean>{
-    const self = this as UserDocument
-    return await bcrypt.compare(passwordAttemp, self.password)
-}
+userSchema.methods.comparePassword = async function (
+  passwordAttempt: string
+): Promise<Boolean> {
+  const self = this as UserDocument;
 
-export default UserModel
+  return await bcrypt.compare(passwordAttempt, self.password);
+};
+
+export default UserModel;

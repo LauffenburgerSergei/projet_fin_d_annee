@@ -6,20 +6,18 @@ export const createUserSchema = object({
       required_error: "Name is required",
     }),
     password: string({
-      required_error: "Password is required ☣️",
-    })
-      .min(6, "Password to short 🤏")
-      .max(15, ""),
+      required_error: "Password is required",
+    }).min(6, "Password to short"),
     email: string({
-      required_error: "Email is required 📧",
+      required_error: "Email is required",
     }),
     surname: string({
       required_error: "Surname is required",
     }),
-  }).refine((data) => data.name === "hitler", {
+  }).refine((data) => data.name !== "hilter", {
     message: "Mot interdit",
-    path: ["forbiddenName"],
+    path: ["invalideName"],
   }),
 });
 
-export type createUserInput = TypeOf<typeof createUserSchema>;
+export type CreateUserInput = TypeOf<typeof createUserSchema>;
